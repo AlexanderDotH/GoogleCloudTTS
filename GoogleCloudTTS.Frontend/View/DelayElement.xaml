@@ -4,9 +4,138 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:GoogleCloudTTS.Frontend.View"
-             mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Background="Transparent"
+             Foreground="White"
+             mc:Ignorable="d">
+    
+    <Border CornerRadius="7" 
+            Background="#212121">
         
-    </Grid>
+        <Grid Margin="15">
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="40*"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" 
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                
+                <materialDesign:PackIcon Kind="Timer" 
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Left"/>
+        
+                <TextBlock Margin="10,0,0,0" 
+                           Text="Delay" 
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left" 
+                           FontSize="15" 
+                           FontFamily="Roboto" 
+                           FontWeight="Normal"/>
+
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                
+                <TextBox
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    materialDesign:HintAssist.Hint="60"
+                    TextWrapping="Wrap"
+                    FontSize="14"
+                    Width="50"
+                    VerticalScrollBarVisibility="Auto" />
+        
+                <ComboBox VerticalAlignment="Center" 
+                          HorizontalAlignment="Left"
+                          FontSize="14"
+                          materialDesign:HintAssist.Hint="SEK"
+                          Margin="10,0,0,0">
+                    <ComboBoxItem>MS</ComboBoxItem>
+                    <ComboBoxItem>SEK</ComboBoxItem>
+                    <ComboBoxItem>MIN</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="2"
+                        HorizontalAlignment="Right">
+                
+                <Button Margin="30,0,0,0"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        materialDesign:ButtonAssist.CornerRadius="5"
+                        Width="Auto"
+                        VerticalAlignment="Center">
+                
+                    <StackPanel Orientation="Horizontal">
+                        
+                        <TextBlock Text="Remove" 
+                                   VerticalAlignment="Center"/>
+                
+                        <materialDesign:PackIcon Kind="Delete" 
+                                                 VerticalAlignment="Center" 
+                                                 Margin="5,0,0,0"/>
+                    </StackPanel>
+                
+                </Button>
+            </StackPanel>
+            
+        </Grid>
+        
+        <!--<StackPanel Orientation="Horizontal" Margin="15">
+        
+            <materialDesign:PackIcon Kind="Timer" 
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Left"/>
+        
+            <TextBlock Margin="10,0,0,0" 
+                       Text="Delay" 
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left" 
+                       FontSize="15" 
+                       FontFamily="Roboto" 
+                       FontWeight="Normal"/>
+            
+            <TextBox
+                Margin="20,0,0,0"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Left"
+                materialDesign:HintAssist.Hint="60"
+                TextWrapping="Wrap"
+                FontSize="14"
+                Width="50"
+                VerticalScrollBarVisibility="Auto" />
+        
+            <ComboBox VerticalAlignment="Center" 
+                      HorizontalAlignment="Left"
+                      FontSize="14"
+                      materialDesign:HintAssist.Hint="SEK"
+                      Margin="10,0,0,0">
+                <ComboBoxItem>MS</ComboBoxItem>
+                <ComboBoxItem>SEK</ComboBoxItem>
+                <ComboBoxItem>MIN</ComboBoxItem>
+            </ComboBox>
+            
+            <Button Margin="30,0,0,0"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    materialDesign:ButtonAssist.CornerRadius="5"
+                    Width="Auto"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right">
+                
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Remove" VerticalAlignment="Center"/>
+                
+                    <materialDesign:PackIcon Kind="Delete" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                </StackPanel>
+                
+            </Button>
+            
+        </StackPanel>-->
+    </Border>
 </UserControl>

@@ -6,7 +6,24 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
-        <RootNamespace>GoogleCloudTTS</RootNamespace>
+        <RootNamespace>GoogleCloudTTS.Frontend</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MaterialDesignThemes" Version="4.10.0-ci281" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Windows\MainWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GoogleCloudTTS.Backend\GoogleCloudTTS.Backend.csproj" />
+      <ProjectReference Include="..\GoogleCloudTTS.Shared\GoogleCloudTTS.Shared.csproj" />
+    </ItemGroup>
 
 </Project>

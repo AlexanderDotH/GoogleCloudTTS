@@ -1,12 +1,114 @@
-﻿<Window x:Class="GoogleCloudTTS.Frontend.MainWindow"
+﻿<Window x:Class="GoogleCloudTTS.Frontend.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GoogleCloudTTS"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:view="clr-namespace:GoogleCloudTTS.Frontend.View"
+        xmlns:viewModel="clr-namespace:GoogleCloudTTS.Frontend.ViewModel"
+        Background="{StaticResource MaterialDesignDarkBackground}"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" 
+        Height="750" 
+        Width="1200">
+    
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    
     <Grid>
-
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        
+        <materialDesign:DialogHost Grid.RowSpan="5" Identifier="NewItemDialog"/>
+        
+        <StackPanel Grid.Row="0" 
+                    Background="{DynamicResource PrimaryColor}"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Orientation="Horizontal">
+            
+            <materialDesign:PackIcon Kind="Brain" 
+                                     Foreground="White"
+                                     Width="30" 
+                                     Height="30" 
+                                     Margin="15,0,0,0"
+                                     HorizontalAlignment="Center" 
+                                     VerticalAlignment="Center"/>
+            
+            <TextBlock Margin="10,0,0,0" 
+                       Text="GoogleCloudTTS" 
+                       Foreground="White" 
+                       FontSize="19" 
+                       FontFamily="Roboto" 
+                       FontStyle="Normal" 
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+            
+        </StackPanel>
+        
+        <StackPanel Grid.Row="1" 
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Orientation="Horizontal">
+            
+            <Button Style="{StaticResource MaterialDesignFlatButton}" 
+                    Foreground="{DynamicResource PrimaryColor}"
+                    materialDesign:ButtonAssist.CornerRadius="5"
+                    Command="{Binding NewDialogCommand}"
+                    Margin="10,0,0,0">
+                
+                <StackPanel Orientation="Horizontal">
+                    
+                    <TextBlock VerticalAlignment="Center" 
+                               HorizontalAlignment="Center" 
+                               Text="Add"/>
+                    
+                    <materialDesign:PackIcon Kind="Add"  
+                                             VerticalAlignment="Center"
+                                             Margin="5,0,0,0"
+                                             HorizontalAlignment="Center"/>
+                </StackPanel>
+                
+            </Button>
+            
+        </StackPanel>
+        
+        <Separator Grid.Row="2" 
+                   HorizontalAlignment="Stretch" />
+        
+        <DockPanel Grid.Row="3">
+            
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          HorizontalAlignment="Stretch">
+                
+                <ItemsControl ItemsSource="{Binding Elements}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <view:GenericElement Type="{Binding Type}"
+                                                 Margin="5,0,5,10"></view:GenericElement>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            
+        </DockPanel>
+        
+        <StackPanel Grid.Row="4" 
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Orientation="Horizontal">
+            
+        </StackPanel>
+        
     </Grid>
 </Window>

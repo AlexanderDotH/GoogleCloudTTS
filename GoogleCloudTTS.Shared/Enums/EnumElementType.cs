@@ -1,6 +1,6 @@
 ﻿namespace GoogleCloudTTS.Shared.Enums;
 
-public enum EnumElementType : DependencyObject
+public enum EnumElementType
 {
     DELAY
 }

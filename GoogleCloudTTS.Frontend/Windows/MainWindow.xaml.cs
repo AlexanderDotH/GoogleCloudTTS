@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace GoogleCloudTTS.Frontend;
+namespace GoogleCloudTTS.Frontend.Windows;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml

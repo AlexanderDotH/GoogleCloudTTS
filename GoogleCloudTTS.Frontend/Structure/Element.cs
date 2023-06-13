@@ -1,11 +1,14 @@
-﻿using GoogleCloudTTS.Shared.Enums;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
+using GoogleCloudTTS.Shared.Enums;
 
-namespace GoogleCloudTTS.Shared.Structure;
+namespace GoogleCloudTTS.Frontend.Structure;
 
-public class Element
+public class Element : INotifyPropertyChanged
 {
     public int ItemID { get; set; }
-    public EnumElementType Type { get; set; }
+    private EnumElementType _type;
 
     public Element() {}
     
@@ -13,5 +16,26 @@ public class Element
     {
         ItemID = itemId;
         Type = type;
+    }
+
+    public EnumElementType Type
+    {
+        get => this._type;
+        set => SetField(ref this._type, value);
+    }
+    
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
     }
 }

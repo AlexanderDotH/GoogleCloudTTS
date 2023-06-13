@@ -4,9 +4,53 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:GoogleCloudTTS.Frontend.View.Dialogs"
-             mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:dialogs="clr-namespace:GoogleCloudTTS.Frontend.ViewModel.Dialogs"
+             Background="{StaticResource MaterialDesignDarkBackground}"
+             mc:Ignorable="d">
+    
+    <UserControl.DataContext>
+        <dialogs:NewElementDialogViewModel/>
+    </UserControl.DataContext>
+    
+    <StackPanel Orientation="Vertical">
+
+        <Button Style="{StaticResource MaterialDesignFlatDarkButton}"
+                Width="20"
+                Height="30"
+                Margin="0,5,5,0"
+                Padding="0"
+                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right">
+            
+            <materialDesign:PackIcon Kind="Close" Foreground="White" Width="20" Height="20"/>
+            
+        </Button>
+      
+        <StackPanel Orientation="Vertical">
         
-    </Grid>
+            <Button Width="100" 
+                    Height="100"
+                    Style="{StaticResource MaterialDesignFlatLightButton}"
+                    Foreground="{StaticResource PrimaryColor}"
+                    Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                    CommandParameter="{Binding DelayElementType}"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Margin="20,20,20,0">
+                
+                <materialDesign:PackIcon Kind="Timer" Foreground="White" Width="20" Height="20"/>
+            </Button>
+              
+            <TextBlock HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                       Margin="0,10,0,10"
+                       Foreground="White"
+                       FontSize="14"
+                       FontFamily="Robot"
+                       Text="Delay"/>
+        </StackPanel>
+        
+    </StackPanel>
 </UserControl>
