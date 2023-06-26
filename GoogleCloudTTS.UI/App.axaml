@@ -1,0 +1,23 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia" 
+             xmlns:local="using:GoogleCloudTTS.UI"
+             x:Class="GoogleCloudTTS.UI.App">
+
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+    <Application.Styles>
+        
+        <materialIcons:MaterialIconStyles /> 
+        <StyleInclude Source="avares://Semi.Avalonia/Themes/Index.axaml" />
+        
+        <Style>
+            <Style.Resources>
+                <SolidColorBrush x:Key="PrimaryColor" Color="#2196F3"/>
+                <SolidColorBrush x:Key="SecondaryColor" Color="#1565c0"/>
+            </Style.Resources>
+        </Style>
+    </Application.Styles>
+</Application>

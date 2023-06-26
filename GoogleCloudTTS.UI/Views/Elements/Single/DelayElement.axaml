@@ -1,0 +1,26 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" 
+             d:DesignWidth="800" 
+             d:DesignHeight="450"
+             x:Class="GoogleCloudTTS.UI.Views.Elements.Single.DelayElement">
+    
+    <Grid ColumnDefinitions="Auto, 50, Auto"
+          HorizontalAlignment="Stretch"
+          Margin="10">
+        
+        <StackPanel Grid.Column="0" Spacing="10" Orientation="Horizontal" VerticalAlignment="Center">
+            <avalonia:MaterialIcon Kind="Timer" Margin="5,0,0,0" Width="20" Height="20"/>
+            <TextBlock Text="Delay"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Column="2" Spacing="15" Orientation="Horizontal" VerticalAlignment="Center">
+            <NumericUpDown Classes="Large" Maximum="60" Minimum="0" Value="5.0" VerticalAlignment="Center"/>
+            <TextBlock Text="Seconds" VerticalAlignment="Center"/>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>
