@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:icons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
         xmlns:elements="clr-namespace:GoogleCloudTTS.UI.Views.Elements"
+        xmlns:views="clr-namespace:GoogleCloudTTS.UI.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         Width="900"
         Height="500"
@@ -12,7 +13,6 @@
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="GoogleCloudTTS">
-
     
     <Design.DataContext>
         <vm:MainWindowViewModel/>
@@ -49,7 +49,6 @@
                 <StackPanel Orientation="Vertical" 
                             VerticalAlignment="Center"
                             Margin="0,10,0,10">
-                    
                     <Menu>
                         <MenuItem>
                             <MenuItem.Header>
@@ -59,9 +58,8 @@
                                 </StackPanel>
                             </MenuItem.Header>
                             
-                            <MenuItem Header="Delay">
-                                
-                            </MenuItem>
+                            <MenuItem Header="Delay" 
+                                      Command="{Binding AddDelayElementCommand}"/>
                         </MenuItem>
                     </Menu>
                     
@@ -72,25 +70,61 @@
         <StackPanel Grid.Row="1">
             
             <ListBox ItemsSource="{Binding Elements}"
+                     Margin="10,0,10,0"
                      HorizontalAlignment="Stretch">
-                
+               
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+                        <Grid ColumnDefinitions="Auto, *, Auto, Auto">
                             
-                            <elements:GenericElement EnumElementType="{Binding ElementType}"/>
+                            <elements:GenericElement Grid.Column="0" Control="{Binding Control}"/>
 
-                            <Button Classes="Danger" 
+                            <StackPanel Grid.Column="2" 
+                                        Margin="0,10,0,10"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Orientation="Vertical">
+                                
+                                <Button Theme="{DynamicResource BorderlessButton}"
+                                        VerticalAlignment="Center" 
+
+                                        Command="{Binding ParentViewModel.MoveElementUpCommand}"
+                                        CommandParameter="{Binding ElementID}"
+                                        
+                                        Foreground="White"
+                                        HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <icons:MaterialIcon Kind="Triangle" Width="10" Height="10"/>                                    
+                                    </StackPanel>
+                                </Button>
+                                
+                                <Button Theme="{DynamicResource BorderlessButton}"
+                                        VerticalAlignment="Center" 
+
+                                        Command="{Binding ParentViewModel.MoveElementDownCommand}"
+                                        CommandParameter="{Binding ElementID}"
+                                        
+                                        Foreground="White"
+                                        HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <icons:MaterialIcon Kind="TriangleDown" Width="10" Height="10"/>                                    
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                            
+                            <Button Grid.Column="3" 
+                                    Classes="Danger" 
+                                    Command="{Binding ParentViewModel.RemoveElementCommand}"
+                                    CommandParameter="{Binding ElementID}"
                                     Theme="{DynamicResource BorderlessButton}"
                                     VerticalAlignment="Center" 
                                     HorizontalAlignment="Right">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
                                     <TextBlock Text="Remove"/>
-                                    <icons:MaterialIcon Kind="Remove" Width="20" Height="20"/>                                    
+                                    <icons:MaterialIcon Kind="TrashCan" Width="20" Height="20"/>                                    
                                 </StackPanel>
                             </Button>
-                            
-                        </StackPanel>
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

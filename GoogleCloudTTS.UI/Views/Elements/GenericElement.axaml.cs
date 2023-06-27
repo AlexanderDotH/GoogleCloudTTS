@@ -2,6 +2,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using GoogleCloudTTS.Shared.Classes;
 using GoogleCloudTTS.Shared.Enums;
 using GoogleCloudTTS.UI.Views.Elements.Single;
 
@@ -9,42 +10,25 @@ namespace GoogleCloudTTS.UI.Views.Elements;
 
 public partial class GenericElement : UserControl
 {
-    public static readonly DirectProperty<GenericElement, EnumElementType> EnumElementTypeProperty =
-        AvaloniaProperty.RegisterDirect<GenericElement, EnumElementType>(
-            nameof(EnumElementType),
-            o => o.EnumElementType,
-            (o, v) => o.EnumElementType = v);
-    
+    public static readonly DirectProperty<GenericElement, UserControl> ControlProperty = AvaloniaProperty.RegisterDirect<GenericElement, UserControl>(
+        "Control", o => o.Control, (o, v) => o.Control = v);
+
+    private UserControl _control;
     private Decorator _decorator;
-    private EnumElementType _enumElementType;
-    
+
     public GenericElement()
     {
         AvaloniaXamlLoader.Load(this);
 
         this._decorator = this.Get<Decorator>(nameof(PART_Decorator));
     }
-
-    private void ApplyElementType(EnumElementType type)
-    {
-        switch (type)
-        {
-            case EnumElementType.DELAY:
-            {
-                this._decorator.Child = new DelayElement();
-                break;
-            }
-        }
-    }
     
-    public EnumElementType EnumElementType
+    public UserControl Control
     {
-        get { return _enumElementType; }
+        get => _control;
         set
         {
-            SetAndRaise(EnumElementTypeProperty, ref _enumElementType, value);
-            ApplyElementType(value);
+            this._decorator.Child = value;
         }
     }
-    
 }
