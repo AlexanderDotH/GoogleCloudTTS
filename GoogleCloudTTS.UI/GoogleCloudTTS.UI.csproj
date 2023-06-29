@@ -32,5 +32,6 @@
 
     <ItemGroup>
       <Folder Include="Styles\" />
+      <Folder Include="ViewModels\Elements\Single\" />
     </ItemGroup>
 </Project>

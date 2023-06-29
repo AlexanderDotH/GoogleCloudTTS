@@ -18,9 +18,8 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <Grid RowDefinitions="Auto, Auto, 40">
-        
-        <Border Grid.Row="0"
+    <DockPanel>
+        <Border DockPanel.Dock="Top" 
                 Theme="{StaticResource CardBorder}"
                 Margin="8"
                 Padding="12,4">
@@ -60,6 +59,12 @@
                             
                             <MenuItem Header="Delay" 
                                       Command="{Binding AddDelayElementCommand}"/>
+                            
+                            <MenuItem Header="Text" 
+                                      Command="{Binding AddTextElementCommand}"/>
+                            
+                            <MenuItem Header="Sound" 
+                                      Command="{Binding AddSoundElementCommand}"/>
                         </MenuItem>
                     </Menu>
                     
@@ -67,11 +72,11 @@
             </StackPanel>
         </Border>
         
-        <StackPanel Grid.Row="1">
-            
-            <ListBox ItemsSource="{Binding Elements}"
-                     Margin="10,0,10,0"
-                     HorizontalAlignment="Stretch">
+        <Border DockPanel.Dock="Top">
+            <ListBox 
+                ItemsSource="{Binding Elements}"
+                Margin="10,0,10,0"
+                HorizontalAlignment="Stretch">
                
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -128,12 +133,8 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            
-        </StackPanel>
-        <StackPanel Grid.Row="2">
-            
-        </StackPanel>
-        
-    </Grid>
+        </Border>
+    </DockPanel>
+
 
 </Window>

@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using System.ComponentModel;
+using ReactiveUI;
 
 namespace GoogleCloudTTS.UI.ViewModels;
 

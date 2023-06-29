@@ -1,0 +1,83 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:classes="clr-namespace:GoogleCloudTTS.Shared.Classes;assembly=GoogleCloudTTS.Shared"
+             xmlns:single="clr-namespace:GoogleCloudTTS.UI.Views.Elements.Single"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="GoogleCloudTTS.UI.Views.Elements.Single.TextInputElement">
+
+    <Grid ColumnDefinitions="Auto, 50, Auto"
+          HorizontalAlignment="Stretch"
+          Margin="10">
+        
+        <StackPanel Grid.Column="0" Spacing="10" Orientation="Horizontal" VerticalAlignment="Center">
+            <avalonia:MaterialIcon Kind="Text" Margin="5,0,0,0" Width="20" Height="20"/>
+            <TextBlock Text="Text"/>
+        </StackPanel>
+        
+        
+        <StackPanel Grid.Column="2" Spacing="15" Orientation="Vertical" VerticalAlignment="Center">
+        
+            <StackPanel Orientation="Vertical" Spacing="4">
+                <TextBlock Text="Text" FontSize="11"/>
+                <TextBox MaxWidth="{Binding ElementName=PART_Settings, Path=Bounds.Width}"/>
+            </StackPanel>
+            
+            <StackPanel Name="PART_Settings" Orientation="Horizontal" Spacing="10"  >
+                
+                <StackPanel Orientation="Vertical" Spacing="4">
+                    <TextBlock Text="Language" FontSize="11"/>
+                    <ComboBox Name="PART_LanguageCombobox" MinWidth="100" SelectionChanged="PART_LanguageCombobox_OnSelectionChanged"/>
+                </StackPanel>
+                
+                <StackPanel Orientation="Vertical" Spacing="4">
+                    <TextBlock Text="Engine" FontSize="11"/>
+                    <ComboBox Name="PART_EngineCombobox" MinWidth="100" SelectionChanged="PART_EngineCombobox_OnSelectionChanged"/>
+                </StackPanel>
+                
+                <StackPanel Orientation="Vertical" Spacing="4">
+                    <TextBlock Text="Voice" FontSize="11"/>
+                    <ComboBox Name="PART_VoiceCombobox" MinWidth="100" SelectionChanged="PART_VoiceCombobox_OnSelectionChanged"/>
+                </StackPanel>
+                
+                <StackPanel Orientation="Vertical" Spacing="10">
+                    
+                    <StackPanel Orientation="Vertical" Spacing="4">
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <TextBlock Text="Speed" FontSize="12"/>
+                            <TextBlock Text="{Binding ElementName=PART_SpeedSlider, Path=Value, StringFormat={}{0:N2}}" FontSize="12"/>
+                        </StackPanel>
+                        
+                        <Slider
+                            Name="PART_SpeedSlider"
+                            Width="150"
+                            Classes="ToolTip"
+                            Maximum="4"
+                            Minimum="0.25"
+                            Value="1" />
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Vertical" Spacing="4">
+                        
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <TextBlock Text="Pitch" FontSize="12"/>
+                            <TextBlock Text="{Binding ElementName=PART_PitchSlider, Path=Value, StringFormat={}{0:N2}}" FontSize="12"/>
+                        </StackPanel>
+
+                        <Slider
+                            Name="PART_PitchSlider"
+                            Width="150"
+                            Classes="ToolTip"
+                            Maximum="20"
+                            Minimum="-20"
+                            Value="0" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

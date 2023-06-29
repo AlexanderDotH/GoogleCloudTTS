@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reactive;
+using DynamicData;
 using GoogleCloudTTS.Shared.Classes;
 using GoogleCloudTTS.Shared.Enums;
 using GoogleCloudTTS.UI.Views.Elements.Single;
@@ -21,13 +22,17 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     public ReactiveCommand<int, Unit> RemoveElementCommand { get; set; }
     
     public ReactiveCommand<Unit, Unit> AddDelayElementCommand { get; set; }
-
+    public ReactiveCommand<Unit, Unit> AddTextElementCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> AddSoundElementCommand { get; set; }
+    
     public MainWindowViewModel()
     {
         AddDelayElementCommand = ReactiveCommand.Create(AddDelayElement);
-        
+        AddTextElementCommand = ReactiveCommand.Create(AddTextElement);
+        AddSoundElementCommand = ReactiveCommand.Create(AddSoundElement);
+
         RemoveElementCommand = ReactiveCommand.Create<int>(RemoveElement);
-        
+
         MoveElementUpCommand = ReactiveCommand.Create<int>(MoveElementUp);
         MoveElementDownCommand = ReactiveCommand.Create<int>(MoveElementDown);
 
@@ -39,6 +44,26 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         this.Elements.Add(new Element()
         {
             Control = new DelayElement(),
+            ElementID = new Random().Next(0, 9999),
+            ParentViewModel = this
+        });
+    }
+    
+    private void AddTextElement()
+    {
+        this.Elements.Add(new Element()
+        {
+            Control = new TextInputElement(),
+            ElementID = new Random().Next(0, 9999),
+            ParentViewModel = this
+        });
+    }
+    
+    private void AddSoundElement()
+    {
+        this.Elements.Add(new Element()
+        {
+            Control = new SoundElement(),
             ElementID = new Random().Next(0, 9999),
             ParentViewModel = this
         });
@@ -57,19 +82,13 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         if (index - 1 < 0)
             return;
         
-        if (index + 1 > Elements.Count)
-            return;
-        
         this.Elements.Move(index, index - 1);
     }
     
     private void MoveElementDown(int id)
     {
         int index = GetElementIndexById(id);
-        
-        if (index - 1 < 0)
-            return;
-        
+
         if (index + 1 > Elements.Count)
             return;
         
