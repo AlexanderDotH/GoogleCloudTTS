@@ -1,14 +1,12 @@
-﻿using System;
-using Avalonia.Controls;
-using GoogleCloudTTS.Shared.Enums;
+﻿using GoogleCloudTTS.Shared.Classes;
 using GoogleCloudTTS.UI.ViewModels;
 
-namespace GoogleCloudTTS.Shared.Classes;
+namespace GoogleCloudTTS.UI.Models;
 
 public class Element
 {
     public int ElementID { get; set; }
     public MainWindowViewModel ParentViewModel { get; set; }
-    public UserControl Control { get; set; }
+    public IRequest Control { get; set; }
 
 }

@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Reactive;
+using System.Threading.Tasks;
 using DynamicData;
+using GoogleCloudTTS.Backend.Engine;
 using GoogleCloudTTS.Shared.Classes;
+using GoogleCloudTTS.Shared.Classes.Requests;
 using GoogleCloudTTS.Shared.Enums;
+using GoogleCloudTTS.UI.Models;
 using GoogleCloudTTS.UI.Views.Elements.Single;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ReactiveUI;
@@ -25,6 +31,9 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     public ReactiveCommand<Unit, Unit> AddTextElementCommand { get; set; }
     public ReactiveCommand<Unit, Unit> AddSoundElementCommand { get; set; }
     
+    public ReactiveCommand<Unit, Unit> ExportToFileCommand { get; set; }
+
+    
     public MainWindowViewModel()
     {
         AddDelayElementCommand = ReactiveCommand.Create(AddDelayElement);
@@ -36,7 +45,34 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         MoveElementUpCommand = ReactiveCommand.Create<int>(MoveElementUp);
         MoveElementDownCommand = ReactiveCommand.Create<int>(MoveElementDown);
 
+        ExportToFileCommand = ReactiveCommand.Create(ExportToFile);
+        
         this.Elements = new ObservableCollection<Element>();
+    }
+
+    private void ExportToFile()
+    {
+        AudioRequest request = new AudioRequest();
+
+        List<object> requests = new List<object>();
+
+        foreach (var element in this.Elements)
+        {
+            if (element == null)
+                continue;
+            
+            requests.Add(element.Control.Request);
+        }
+
+        request.Requests = requests;
+
+        if (requests.Count == 0)
+            return;
+        
+        AudioEngine audioEngine = new AudioEngine();
+        File.WriteAllBytes("audio.mp3", audioEngine.ProcessRequest(request).GetAwaiter().GetResult());
+
+        // Insert request to backend here
     }
 
     private void AddDelayElement()

@@ -6,18 +6,22 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using DynamicData;
 using GoogleCloudTTS.Shared.Classes;
+using GoogleCloudTTS.Shared.Classes.Requests.Requests;
+using GoogleCloudTTS.Shared.Data;
+using Microsoft.Win32.SafeHandles;
 
 namespace GoogleCloudTTS.UI.Views.Elements.Single;
 
-public partial class TextInputElement : UserControl
+public partial class TextInputElement : UserControl, IRequest
 {
     public ObservableCollection<VoiceConfig> Voices { get; set; }
     
-    public ObservableCollection<string> Languages { get; set; }
-
     private ComboBox _languageCombobox;
     private ComboBox _engineCombobox;
     private ComboBox _voiceComboBox;
+    private TextBox _textBox;
+    private Slider _speedSlider;
+    private Slider _pitchSlider;
     
     public TextInputElement()
     {
@@ -26,88 +30,12 @@ public partial class TextInputElement : UserControl
         this._languageCombobox = this.Get<ComboBox>(nameof(PART_LanguageCombobox));
         this._engineCombobox = this.Get<ComboBox>(nameof(PART_EngineCombobox));
         this._voiceComboBox = this.Get<ComboBox>(nameof(PART_VoiceCombobox));
+        this._textBox = this.Get<TextBox>(nameof(PART_Text));
+        this._speedSlider = this.Get<Slider>(nameof(PART_SpeedSlider));
+        this._pitchSlider = this.Get<Slider>(nameof(PART_PitchSlider));
         
-        #region Voices
+        this.Voices = new Voices();
 
-        this.Voices = new ObservableCollection<VoiceConfig>();
-
-        // German
-        AddVoiceConfig("German", "de-DE", "Neural2",
-            "de-DE-Neural2-B",
-            "de-DE-Neural2-C",
-            "de-DE-Neural2-D",
-            "de-DE-Neural2-F");
-
-        AddVoiceConfig("German", "de-DE", "Polyglot",
-            "de-DE-Polyglot-1");
-
-        AddVoiceConfig("German", "de-DE", "WaveNet",
-            "de-DE-Wavenet-F",
-            "de-DE-Wavenet-A",
-            "de-DE-Wavenet-B",
-            "de-DE-Wavenet-C",
-            "de-DE-Wavenet-D",
-            "de-DE-Wavenet-E");
-
-        AddVoiceConfig("German", "de-DE", "Basic",
-            "de-DE-Standard-A",
-            "de-DE-Standard-B",
-            "de-DE-Standard-C",
-            "de-DE-Standard-D",
-            "de-DE-Standard-E",
-            "de-DE-Standard-F");
-
-        // US
-        AddVoiceConfig("English (United States)", "en-US", "Neural2",
-            "en-US-Neural2-A",
-            "en-US-Neural2-C",
-            "en-US-Neural2-D",
-            "en-US-Neural2-E",
-            "en-US-Neural2-F",
-            "en-US-Neural2-G",
-            "en-US-Neural2-H",
-            "en-US-Neural2-I",
-            "en-US-Neural2-J");
-
-        AddVoiceConfig("English (United States)", "en-US", "Studio",
-            "en-US-Studio-M",
-            "en-US-Studio-O");
-
-        AddVoiceConfig("English (United States)", "en-US", "Polyglot",
-            "en-US-Polyglot-1");
-
-        AddVoiceConfig("English (United States)", "en-US", "WaveNet",
-            "en-US-Wavenet-G",
-            "en-US-Wavenet-H",
-            "en-US-Wavenet-I",
-            "en-US-Wavenet-J",
-            "en-US-Wavenet-A",
-            "en-US-Wavenet-B",
-            "en-US-Wavenet-C",
-            "en-US-Wavenet-D",
-            "en-US-Wavenet-E",
-            "en-US-Wavenet-F");
-
-        AddVoiceConfig("English (United States)", "en-US", "News",
-            "en-US-News-K",
-            "en-US-News-L",
-            "en-US-News-M",
-            "en-US-News-N");
-
-        AddVoiceConfig("English (United States)", "en-US", "Basic",
-            "en-US-Standard-A",
-            "en-US-Standard-B",
-            "en-US-Standard-C",
-            "en-US-Standard-D",
-            "en-US-Standard-E",
-            "en-US-Standard-F",
-            "en-US-Standard-G",
-            "en-US-Standard-H",
-            "en-US-Standard-I",
-            "en-US-Standard-J");
-
-        #endregion
-        
         this._languageCombobox.ItemsSource = GetLanguages();
         this._languageCombobox.SelectedIndex = 0;
     }
@@ -159,17 +87,6 @@ public partial class TextInputElement : UserControl
 
         return voices;   
     }
-    
-    private void AddVoiceConfig(string language, string languageCode, string voiceEngine, params string[] voices)
-    {
-        this.Voices.Add(new VoiceConfig
-        {
-            Language = language,
-            LanguageCode = languageCode,
-            VoiceEngine = voiceEngine,
-            Voices = new ObservableCollection<string>(voices)
-        });
-    }
 
     private void PART_LanguageCombobox_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
@@ -189,5 +106,37 @@ public partial class TextInputElement : UserControl
     private void PART_VoiceCombobox_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         
+    }
+
+    public object Request
+    {
+        get
+        {
+            if (this._textBox.Text == null || 
+                this._textBox.Text.Length == 0)
+                return null;
+
+            if (this._engineCombobox.SelectedValue == null || 
+                !(this._engineCombobox.SelectedValue is string))
+                return null;
+
+            if (this._languageCombobox.SelectedValue == null ||
+                !(this._languageCombobox.SelectedValue is string))
+                return null;
+            
+            if (this._voiceComboBox.SelectedValue == null ||
+                !(this._voiceComboBox.SelectedValue is string))
+                return null;
+        
+            return new TTSRequest()
+            {
+                Text = this._textBox.Text,
+                Engine = this._engineCombobox.SelectedValue as string,
+                Language = this._languageCombobox.SelectedValue as string,
+                Voice = this._voiceComboBox.SelectionBoxItem as string,
+                Speed = this._speedSlider.Value,
+                Pitch = this._pitchSlider.Value
+            };
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using Avalonia;
@@ -6,10 +7,12 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
+using GoogleCloudTTS.Shared.Classes;
+using GoogleCloudTTS.Shared.Classes.Requests.Requests;
 
 namespace GoogleCloudTTS.UI.Views.Elements.Single;
 
-public partial class SoundElement : UserControl
+public partial class SoundElement : UserControl, IRequest
 {
     private TextBox _fileLocation;
     
@@ -32,15 +35,11 @@ public partial class SoundElement : UserControl
             FileTypeFilter = GetFileTypes(),
             AllowMultiple = false,
         });
+
+        if (result == null || result.Count == 0)
+            return;
         
-        foreach (var storageFile in result)
-        {
-            if (System.IO.File.Exists(storageFile.Path.AbsolutePath))
-            {
-                this._fileLocation.Text = storageFile.Path.AbsolutePath;
-                break;
-            }
-        }
+        this._fileLocation.Text = result[0].Path.AbsolutePath;
     }
     
     private IStorageProvider? GetStorageProvider()
@@ -58,5 +57,20 @@ public partial class SoundElement : UserControl
                 Patterns = new[] { "*.mp3" }
             }
         };
+    }
+
+    public object Request
+    {
+        get
+        {
+            if (this._fileLocation.Text == null || 
+                this._fileLocation.Text.Length == 0)
+                return null;
+        
+            return new SoundRequest()
+            {
+                File = new FileInfo(this._fileLocation.Text)
+            };
+        }
     }
 }

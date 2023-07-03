@@ -6,4 +6,26 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+
+
+    <ItemGroup>
+      <PackageReference Include="Avalonia" Version="11.0.0-rc1.1" />
+      <PackageReference Include="Fastenshtein" Version="1.0.0.8" />
+      <PackageReference Include="NAudio" Version="2.1.0" />
+      <PackageReference Include="NAudio.Lame" Version="2.1.0" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+
+
+    <ItemGroup>
+      <Folder Include="Combine\" />
+    </ItemGroup>
+
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\GoogleCloudTTS.Shared\GoogleCloudTTS.Shared.csproj" />
+    </ItemGroup>
+
 </Project>

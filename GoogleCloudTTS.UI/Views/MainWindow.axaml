@@ -7,8 +7,9 @@
         xmlns:elements="clr-namespace:GoogleCloudTTS.UI.Views.Elements"
         xmlns:views="clr-namespace:GoogleCloudTTS.UI.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        Width="900"
-        Height="500"
+        Width="1100"
+        Height="700"
+        WindowStartupLocation="CenterScreen"
         x:Class="GoogleCloudTTS.UI.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
@@ -18,123 +19,155 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <DockPanel>
-        <Border DockPanel.Dock="Top" 
-                Theme="{StaticResource CardBorder}"
-                Margin="8"
-                Padding="12,4">
-            
-            <StackPanel Orientation="Vertical" Spacing="10">
+    <Grid>
+        <DockPanel Dock="Top">
+            <Border DockPanel.Dock="Top" 
+                    Theme="{StaticResource CardBorder}"
+                    Margin="8"
+                    Padding="12,4">
                 
-                <StackPanel Orientation="Horizontal" 
-                            Spacing="10" 
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Left"
-                            Margin="0,10,0,0">
-                    
-                    <icons:MaterialIcon Kind="Brain" 
-                                        Width="25" 
-                                        Height="25"/>
+                <StackPanel Orientation="Vertical" Spacing="10">
                     
                     <StackPanel Orientation="Horizontal" 
-                                Spacing="5">
-                        <TextBlock Text="GoogleCloudTTS" FontSize="14"/>
-                        <TextBlock Text="/" FontSize="14" Foreground="Gray"/>
-                        <TextBlock Text="Home" FontSize="14" Foreground="Gray"/>
+                                Spacing="10" 
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left"
+                                Margin="0,10,0,0">
+                        
+                        <icons:MaterialIcon Kind="Brain" 
+                                            Width="25" 
+                                            Height="25"/>
+                        
+                        <StackPanel Orientation="Horizontal" 
+                                    Spacing="5">
+                            <TextBlock Text="GoogleCloudTTS" FontSize="14"/>
+                            <TextBlock Text="/" FontSize="14" Foreground="Gray"/>
+                            <TextBlock Text="Home" FontSize="14" Foreground="Gray"/>
+                        </StackPanel>
+                        
                     </StackPanel>
                     
+                    <StackPanel Orientation="Vertical" 
+                                VerticalAlignment="Center"
+                                Margin="0,10,0,10">
+                        <Menu>
+                            <MenuItem>
+                                <MenuItem.Header>
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="Add"/>
+                                        <icons:MaterialIcon Kind="Add"/>
+                                    </StackPanel>
+                                </MenuItem.Header>
+                                
+                                <MenuItem Header="Delay" 
+                                          Command="{Binding AddDelayElementCommand}"/>
+                                
+                                <MenuItem Header="Text" 
+                                          Command="{Binding AddTextElementCommand}"/>
+                                
+                                <MenuItem Header="Sound" 
+                                          Command="{Binding AddSoundElementCommand}"/>
+                            </MenuItem>
+                        </Menu>
+                        
+                    </StackPanel>
                 </StackPanel>
-                
-                <StackPanel Orientation="Vertical" 
-                            VerticalAlignment="Center"
-                            Margin="0,10,0,10">
-                    <Menu>
-                        <MenuItem>
-                            <MenuItem.Header>
-                                <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="Add"/>
-                                    <icons:MaterialIcon Kind="Add"/>
+            </Border>
+            
+            <Border DockPanel.Dock="Top">
+                <ListBox 
+                    ItemsSource="{Binding Elements}"
+                    Margin="10,0,10,0"
+                    HorizontalAlignment="Stretch">
+                   
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="Auto, *, Auto, Auto">
+                                
+                                <elements:GenericElement Grid.Column="0" Control="{Binding Control}"/>
+
+                                <StackPanel Grid.Column="2" 
+                                            Margin="0,10,0,10"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Orientation="Vertical">
+                                    
+                                    <Button Theme="{DynamicResource BorderlessButton}"
+                                            VerticalAlignment="Center" 
+
+                                            Command="{Binding ParentViewModel.MoveElementUpCommand}"
+                                            CommandParameter="{Binding ElementID}"
+                                            
+                                            Foreground="White"
+                                            HorizontalAlignment="Right">
+                                        <StackPanel Orientation="Horizontal" Spacing="10">
+                                            <icons:MaterialIcon Kind="Triangle" Width="10" Height="10"/>                                    
+                                        </StackPanel>
+                                    </Button>
+                                    
+                                    <Button Theme="{DynamicResource BorderlessButton}"
+                                            VerticalAlignment="Center" 
+
+                                            Command="{Binding ParentViewModel.MoveElementDownCommand}"
+                                            CommandParameter="{Binding ElementID}"
+                                            
+                                            Foreground="White"
+                                            HorizontalAlignment="Right">
+                                        <StackPanel Orientation="Horizontal" Spacing="10">
+                                            <icons:MaterialIcon Kind="TriangleDown" Width="10" Height="10"/>                                    
+                                        </StackPanel>
+                                    </Button>
                                 </StackPanel>
-                            </MenuItem.Header>
-                            
-                            <MenuItem Header="Delay" 
-                                      Command="{Binding AddDelayElementCommand}"/>
-                            
-                            <MenuItem Header="Text" 
-                                      Command="{Binding AddTextElementCommand}"/>
-                            
-                            <MenuItem Header="Sound" 
-                                      Command="{Binding AddSoundElementCommand}"/>
-                        </MenuItem>
-                    </Menu>
-                    
-                </StackPanel>
-            </StackPanel>
-        </Border>
+                                
+                                <Button Grid.Column="3" 
+                                        Classes="Danger" 
+                                        Command="{Binding ParentViewModel.RemoveElementCommand}"
+                                        CommandParameter="{Binding ElementID}"
+                                        Theme="{DynamicResource BorderlessButton}"
+                                        VerticalAlignment="Center" 
+                                        HorizontalAlignment="Right">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="Remove"/>
+                                        <icons:MaterialIcon Kind="TrashCan" Width="20" Height="20"/>                                    
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+        </DockPanel>
         
-        <Border DockPanel.Dock="Top">
-            <ListBox 
-                ItemsSource="{Binding Elements}"
-                Margin="10,0,10,0"
-                HorizontalAlignment="Stretch">
-               
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid ColumnDefinitions="Auto, *, Auto, Auto">
-                            
-                            <elements:GenericElement Grid.Column="0" Control="{Binding Control}"/>
-
-                            <StackPanel Grid.Column="2" 
-                                        Margin="0,10,0,10"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Center"
-                                        Orientation="Vertical">
-                                
-                                <Button Theme="{DynamicResource BorderlessButton}"
-                                        VerticalAlignment="Center" 
-
-                                        Command="{Binding ParentViewModel.MoveElementUpCommand}"
-                                        CommandParameter="{Binding ElementID}"
-                                        
-                                        Foreground="White"
-                                        HorizontalAlignment="Right">
-                                    <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <icons:MaterialIcon Kind="Triangle" Width="10" Height="10"/>                                    
-                                    </StackPanel>
-                                </Button>
-                                
-                                <Button Theme="{DynamicResource BorderlessButton}"
-                                        VerticalAlignment="Center" 
-
-                                        Command="{Binding ParentViewModel.MoveElementDownCommand}"
-                                        CommandParameter="{Binding ElementID}"
-                                        
-                                        Foreground="White"
-                                        HorizontalAlignment="Right">
-                                    <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <icons:MaterialIcon Kind="TriangleDown" Width="10" Height="10"/>                                    
-                                    </StackPanel>
-                                </Button>
-                            </StackPanel>
-                            
-                            <Button Grid.Column="3" 
-                                    Classes="Danger" 
-                                    Command="{Binding ParentViewModel.RemoveElementCommand}"
-                                    CommandParameter="{Binding ElementID}"
-                                    Theme="{DynamicResource BorderlessButton}"
-                                    VerticalAlignment="Center" 
-                                    HorizontalAlignment="Right">
-                                <StackPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBlock Text="Remove"/>
-                                    <icons:MaterialIcon Kind="TrashCan" Width="20" Height="20"/>                                    
-                                </StackPanel>
-                            </Button>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Border>
-    </DockPanel>
+        <DockPanel Dock="Bottom">
+            <Border Theme="{StaticResource CardBorder}"
+                    VerticalAlignment="Bottom"
+                    Margin="8"
+                    Padding="4,4">
+                
+                <DropDownButton Width="150"
+                                Command="{Binding ExportToFileCommand}"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center">
+                    <DropDownButton.Flyout>
+                        <MenuFlyout Placement="BottomEdgeAlignedRight">
+                            <MenuItem Header="Export as File" />
+                            <MenuItem Header="Export to selected Folder" />
+                        </MenuFlyout>
+                    </DropDownButton.Flyout>
+                    
+                    <DropDownButton.Content>
+                        <StackPanel Orientation="Horizontal" Spacing="15">
+                            <icons:MaterialIcon Kind="Export" Width="15" Height="15" VerticalAlignment="Center"/>
+                            <TextBlock Text="Export" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </DropDownButton.Content>
+                    
+                </DropDownButton>
+            </Border>
+        </DockPanel>
+    </Grid>
+    
+   
 
 
 </Window>

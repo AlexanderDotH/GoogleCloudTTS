@@ -18,7 +18,7 @@
         </StackPanel>
         
         <StackPanel Grid.Column="2" Spacing="15" Orientation="Horizontal" VerticalAlignment="Center">
-            <NumericUpDown Classes="Large" Maximum="60" Minimum="0" Value="5.0" VerticalAlignment="Center"/>
+            <NumericUpDown Name="PART_Delay" Classes="Large" Maximum="60" Minimum="0" Value="5.0" VerticalAlignment="Center"/>
             <TextBlock Text="Seconds" VerticalAlignment="Center"/>
         </StackPanel>
         

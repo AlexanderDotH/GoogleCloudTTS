@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\GoogleCloudTTS.Backend\GoogleCloudTTS.Backend.csproj" />
       <ProjectReference Include="..\GoogleCloudTTS.Shared\GoogleCloudTTS.Shared.csproj" />
     </ItemGroup>
 
