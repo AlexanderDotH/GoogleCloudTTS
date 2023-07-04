@@ -8,4 +8,6 @@ public class VoiceConfig
     public string LanguageCode { get; set; }
     public string VoiceEngine { get; set; }
     public ObservableCollection<string> Voices { get; set; }
+    public ObservableCollection<string> Gender { get; set; }
+
 }

@@ -11,6 +11,7 @@
     <ItemGroup>
       <PackageReference Include="Avalonia" Version="11.0.0-rc1.1" />
       <PackageReference Include="Fastenshtein" Version="1.0.0.8" />
+      <PackageReference Include="Google.Cloud.TextToSpeech.V1" Version="3.2.0" />
       <PackageReference Include="NAudio" Version="2.1.0" />
       <PackageReference Include="NAudio.Lame" Version="2.1.0" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

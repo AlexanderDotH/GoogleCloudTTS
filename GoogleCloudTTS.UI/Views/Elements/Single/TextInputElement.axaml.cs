@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using DynamicData;
 using GoogleCloudTTS.Shared.Classes;
@@ -127,7 +128,7 @@ public partial class TextInputElement : UserControl, IRequest
             if (this._voiceComboBox.SelectedValue == null ||
                 !(this._voiceComboBox.SelectedValue is string))
                 return null;
-        
+            
             return new TTSRequest()
             {
                 Text = this._textBox.Text,
@@ -137,6 +138,17 @@ public partial class TextInputElement : UserControl, IRequest
                 Speed = this._speedSlider.Value,
                 Pitch = this._pitchSlider.Value
             };
+        }
+    }
+
+    private void PART_Text_OnKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Space) {
+            
+            e.Handled = true;
+            
+            this._textBox.Text = this._textBox.Text.Insert(this._textBox.SelectionStart, " ");
+            this._textBox.CaretIndex++;
         }
     }
 }

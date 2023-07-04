@@ -11,8 +11,11 @@ public class JsonTTSAudiConfig
     public List<string> effectsProfileId { get; set; }
 
     [JsonProperty("pitch")]
-    public int pitch { get; set; }
+    public double pitch { get; set; }
 
     [JsonProperty("speakingRate")]
     public double speakingRate { get; set; }
+    
+    /*[JsonProperty("sampleRateHertz")]
+    public double sampleRateHertz { get; set; }*/
 }

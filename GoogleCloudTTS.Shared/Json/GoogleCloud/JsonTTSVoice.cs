@@ -9,4 +9,7 @@ public class JsonTTSVoice
 
     [JsonProperty("name")]
     public string name { get; set; }
+    
+    [JsonProperty("ssmlGender")]
+    public string ssmlGender { get; set; }
 }

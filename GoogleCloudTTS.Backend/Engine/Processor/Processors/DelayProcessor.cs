@@ -6,13 +6,11 @@ namespace GoogleCloudTTS.Backend.Engine.Processor.Processors;
 
 public class DelayProcessor : IProcessor
 {
-    private readonly int _sampleRate;
-    private readonly int _channels;
+    private WaveFormat _format;
     
-    public DelayProcessor()
+    public DelayProcessor(WaveFormat format)
     {
-        this._sampleRate = 44100;
-        this._channels = 2;
+        this._format = format;
     }
     
     public async Task<byte[]> GetAudio(object request)
@@ -25,12 +23,12 @@ public class DelayProcessor : IProcessor
         if (delayRequest is null)
             return null;
 
-        int length = this._sampleRate * delayRequest.Delay.Seconds * this._channels * 2;
+        int length = this._format.SampleRate * delayRequest.Delay.Seconds * this._format.Channels * 2;
 
         byte[] pureSilence = new byte[length];
 
         await using MemoryStream memoryStream = new MemoryStream();
-        await using WaveFileWriter wave = new WaveFileWriter(memoryStream, new WaveFormat(this._sampleRate, 16, this._channels)); 
+        await using WaveFileWriter wave = new WaveFileWriter(memoryStream, this._format); 
 
         wave.Write(pureSilence, 0, pureSilence.Length);
         wave.Flush();

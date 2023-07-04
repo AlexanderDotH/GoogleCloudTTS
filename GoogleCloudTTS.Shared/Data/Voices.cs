@@ -7,17 +7,25 @@ public class Voices : ObservableCollection<VoiceConfig>
 {
     public Voices()
     {
+        ObservableCollection<string> gender = new ObservableCollection<string>();
+        gender.Add("Male");
+        gender.Add("Female");
+        gender.Add("Neutral");
+        
         // German
         AddVoiceConfig("German", "de-DE", "Neural2",
+            gender,
             "de-DE-Neural2-B",
             "de-DE-Neural2-C",
             "de-DE-Neural2-D",
             "de-DE-Neural2-F");
 
         AddVoiceConfig("German", "de-DE", "Polyglot",
+            gender,
             "de-DE-Polyglot-1");
 
         AddVoiceConfig("German", "de-DE", "WaveNet",
+            gender,
             "de-DE-Wavenet-F",
             "de-DE-Wavenet-A",
             "de-DE-Wavenet-B",
@@ -26,6 +34,7 @@ public class Voices : ObservableCollection<VoiceConfig>
             "de-DE-Wavenet-E");
 
         AddVoiceConfig("German", "de-DE", "Basic",
+            gender,
             "de-DE-Standard-A",
             "de-DE-Standard-B",
             "de-DE-Standard-C",
@@ -35,6 +44,7 @@ public class Voices : ObservableCollection<VoiceConfig>
 
         // US
         AddVoiceConfig("English (United States)", "en-US", "Neural2",
+            gender,
             "en-US-Neural2-A",
             "en-US-Neural2-C",
             "en-US-Neural2-D",
@@ -46,13 +56,16 @@ public class Voices : ObservableCollection<VoiceConfig>
             "en-US-Neural2-J");
 
         AddVoiceConfig("English (United States)", "en-US", "Studio",
+            gender,
             "en-US-Studio-M",
             "en-US-Studio-O");
 
         AddVoiceConfig("English (United States)", "en-US", "Polyglot",
+            gender,
             "en-US-Polyglot-1");
 
         AddVoiceConfig("English (United States)", "en-US", "WaveNet",
+            gender,
             "en-US-Wavenet-G",
             "en-US-Wavenet-H",
             "en-US-Wavenet-I",
@@ -65,12 +78,14 @@ public class Voices : ObservableCollection<VoiceConfig>
             "en-US-Wavenet-F");
 
         AddVoiceConfig("English (United States)", "en-US", "News",
+            gender,
             "en-US-News-K",
             "en-US-News-L",
             "en-US-News-M",
             "en-US-News-N");
 
         AddVoiceConfig("English (United States)", "en-US", "Basic",
+            gender,
             "en-US-Standard-A",
             "en-US-Standard-B",
             "en-US-Standard-C",
@@ -80,17 +95,19 @@ public class Voices : ObservableCollection<VoiceConfig>
             "en-US-Standard-G",
             "en-US-Standard-H",
             "en-US-Standard-I",
-            "en-US-Standard-J");
+            "en-US-Standard-J",
+            "Male");
     }
     
-    private void AddVoiceConfig(string language, string languageCode, string voiceEngine, params string[] voices)
+    private void AddVoiceConfig(string language, string languageCode, string voiceEngine, ObservableCollection<string> gender, params string[] voices)
     {
         this.Add(new VoiceConfig
         {
             Language = language,
             LanguageCode = languageCode,
             VoiceEngine = voiceEngine,
-            Voices = new ObservableCollection<string>(voices)
+            Voices = new ObservableCollection<string>(voices),
+            Gender = gender
         });
     }
 }

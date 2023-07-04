@@ -33,5 +33,53 @@ public class Converter
 
         return outputMs.ToArray();
     }
+    
+    public static async Task<byte[]> CombineWavFiles(List<byte[]> audioFiles, WaveFormat format)
+    {
+        using (MemoryStream outputStream = new MemoryStream())
+        {
+            using (WaveFileWriter waveFileWriter = new WaveFileWriter(outputStream, format))
+            {
+                foreach (byte[] file in audioFiles)
+                {
+                    using (MemoryStream ms = new MemoryStream(file))
+                    using (WaveFileReader waveFileReader = new WaveFileReader(ms))
+                    {
+                        int bytesRead;
+                        byte[] buffer = new byte[1024];
+                        while ((bytesRead = waveFileReader.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            waveFileWriter.Write(buffer, 0, bytesRead);
+                        }
+                    }
+                }
+            }
+
+            return outputStream.ToArray();
+        }
+    }
+    
+    public static async Task<byte[]> ConvertFormat(byte[] monoAudio, WaveFormat targetFormat)
+    {
+        await using MemoryStream inputMs = new MemoryStream(monoAudio);
+        await using MemoryStream outputMs = new MemoryStream();
+
+        await using (WaveFileReader reader = new WaveFileReader(inputMs))
+        {
+            await using (WaveFormatConversionStream stereoStream = new WaveFormatConversionStream(targetFormat, reader))
+            await using (WaveFileWriter writer = new WaveFileWriter(outputMs, stereoStream.WaveFormat))
+            {
+                byte[] buffer = new byte[stereoStream.WaveFormat.AverageBytesPerSecond];
+                int bytesRead;
+
+                while ((bytesRead = stereoStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    writer.Write(buffer, 0, bytesRead);
+                }
+            }
+        }
+
+        return outputMs.ToArray();
+    }
 
 }
