@@ -14,10 +14,6 @@
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="GoogleCloudTTS">
-    
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
 
     <Grid>
         <DockPanel Dock="Top">
@@ -77,7 +73,7 @@
             <Border DockPanel.Dock="Top">
                 <ListBox 
                     ItemsSource="{Binding Elements}"
-                    Margin="10,0,10,60"
+                    Margin="10,0,10,90"
                     HorizontalAlignment="Stretch">
                    
                     <ListBox.ItemTemplate>
@@ -144,30 +140,50 @@
                     Margin="8"
                     Padding="10">
                 
-                <StackPanel Orientation="Vertical" Spacing="4"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center">
+               <Panel HorizontalAlignment="Stretch">
+                   
+                   <StackPanel Orientation="Vertical" Spacing="6"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center">
                     
-                    <TextBlock Text="Export:" FontSize="12"/>
+                       <TextBlock Text="Export:" FontSize="12"/>
                     
-                    <DropDownButton Width="150"
-                                    Command="{Binding ExportToFileCommand}">
-                        <DropDownButton.Flyout>
-                            <MenuFlyout Placement="BottomEdgeAlignedRight">
-                                <MenuItem Header="Export as MP3" />
-                                <MenuItem Header="Export as WAV" />
-                            </MenuFlyout>
-                        </DropDownButton.Flyout>
+                       <DropDownButton Width="150"
+                                       IsEnabled="{Binding !IsProcessing}">
+                           <DropDownButton.Flyout>
+                               <MenuFlyout Placement="BottomEdgeAlignedRight">
+                                   <MenuItem Header="Export as MP3" Command="{Binding ExportAsMP3FileCommand}" />
+                                   <MenuItem Header="Export as WAV" Command="{Binding ExportAsWAVFileCommand}" />
+                               </MenuFlyout>
+                           </DropDownButton.Flyout>
                     
-                        <DropDownButton.Content>
-                            <StackPanel Orientation="Horizontal" Spacing="15">
-                                <icons:MaterialIcon Kind="Export" Width="15" Height="15" VerticalAlignment="Center"/>
-                                <TextBlock Text="Export" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </DropDownButton.Content>
+                           <DropDownButton.Content>
+                               <StackPanel Orientation="Horizontal" Spacing="15">
+                                   <icons:MaterialIcon Kind="Export" Width="15" Height="15" VerticalAlignment="Center"/>
+                                   <TextBlock Text="Export" VerticalAlignment="Center"/>
+                               </StackPanel>
+                           </DropDownButton.Content>
                     
-                    </DropDownButton>
-                </StackPanel>
+                       </DropDownButton>
+                   </StackPanel>
+                   
+                   <StackPanel Orientation="Vertical" 
+                               Margin="170,10,0,0"
+                               HorizontalAlignment="Stretch" 
+                               Spacing="6">
+                       <StackPanel Orientation="Horizontal" Spacing="5">
+                           <TextBlock Text="{Binding Display}" FontSize="13"/>
+                       </StackPanel>
+                       
+                       <ProgressBar Minimum="0" Maximum="100" Height="8" Value="{Binding Progress}" CornerRadius="5">
+                           <ProgressBar.Transitions>
+                               <Transitions>
+                                   <DoubleTransition Property="Value" Easing="QuadraticEaseInOut" Duration="0:0:0.5"/>
+                               </Transitions>
+                           </ProgressBar.Transitions>
+                       </ProgressBar>
+                   </StackPanel>
+               </Panel>
             </Border>
         </DockPanel>
     </Grid>

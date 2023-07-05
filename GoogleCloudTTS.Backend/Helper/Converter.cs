@@ -18,6 +18,20 @@ public class Converter
         return outputMs.ToArray();
     } 
     
+    public static async Task<byte[]> ConvertMp3ToWav(string mp3File)
+    {
+        await using (Mp3FileReader mp3 = new Mp3FileReader(mp3File))
+        {
+            await using (WaveStream pcm = WaveFormatConversionStream.CreatePcmStream(mp3))
+            {
+                MemoryStream ms = new MemoryStream();
+                WaveFileWriter.WriteWavFileToStream(ms, pcm);
+
+                return ms.ToArray();
+            }
+        }
+    }
+    
     public static async Task<byte[]> CombineMp3Files(List<byte[]> inputFiles)
     {
         await using MemoryStream outputMs = new MemoryStream();

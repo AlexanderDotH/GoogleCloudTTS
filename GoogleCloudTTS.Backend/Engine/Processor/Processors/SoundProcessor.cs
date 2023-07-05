@@ -1,4 +1,5 @@
-﻿using GoogleCloudTTS.Shared.Classes.Requests.Requests;
+﻿using GoogleCloudTTS.Backend.Helper;
+using GoogleCloudTTS.Shared.Classes.Requests.Requests;
 using NAudio.Wave;
 
 namespace GoogleCloudTTS.Backend.Engine.Processor.Processors;
@@ -22,6 +23,7 @@ public class SoundProcessor : IProcessor
         if (soundRequest == null)
             return null;
         
+        /*
         await using Mp3FileReader mp3Reader = new Mp3FileReader(soundRequest.File.FullName);
         await using MemoryStream ms = new MemoryStream();
         await using WaveFileWriter waveWriter = new WaveFileWriter(ms, this._format);
@@ -33,8 +35,9 @@ public class SoundProcessor : IProcessor
         {
             waveWriter.Write(bytes, 0, read);
         }
+        */
 
-        return ms.ToArray();
+        return await Converter.ConvertMp3ToWav(soundRequest.File.FullName);
     }
 
     public Type Accept => typeof(SoundRequest);

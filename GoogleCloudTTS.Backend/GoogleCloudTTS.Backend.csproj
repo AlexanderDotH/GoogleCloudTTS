@@ -20,12 +20,6 @@
 
 
     <ItemGroup>
-      <Folder Include="Combine\" />
-    </ItemGroup>
-
-
-
-    <ItemGroup>
       <ProjectReference Include="..\GoogleCloudTTS.Shared\GoogleCloudTTS.Shared.csproj" />
     </ItemGroup>
 

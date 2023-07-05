@@ -22,10 +22,10 @@
         
             <StackPanel Orientation="Vertical" Spacing="4">
                 <TextBlock Text="Text" FontSize="11"/>
-                <TextBox Name="PART_Text" KeyDown="PART_Text_OnKeyDown" MaxWidth="{Binding ElementName=PART_Settings, Path=Bounds.Width}"/>
+                <TextBox Name="PART_Text" KeyDown="PART_Text_OnKeyDown" Watermark="Please remember to submit the report on Friday and confirm the meeting with the marketing team." MaxWidth="{Binding ElementName=PART_Settings, Path=Bounds.Width}"/>
             </StackPanel>
             
-            <StackPanel Name="PART_Settings" Orientation="Horizontal" Spacing="10"  >
+            <StackPanel Name="PART_Settings" Orientation="Horizontal" Spacing="40">
                 
                 <StackPanel Orientation="Vertical" Spacing="4">
                     <TextBlock Text="Language" FontSize="11"/>

@@ -7,6 +7,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
+using GoogleCloudTTS.Backend.Helper;
 using GoogleCloudTTS.Shared.Classes;
 using GoogleCloudTTS.Shared.Classes.Requests.Requests;
 
@@ -25,38 +26,12 @@ public partial class SoundElement : UserControl, IRequest
 
     private async void PART_ChooseFile_OnClick(object? sender, RoutedEventArgs e)
     {
-        IStorageProvider? sp = GetStorageProvider();
+        var result = await new FilePicker(this, "*.mp3").Open();
         
-        if (sp is null) return;
-
-        IReadOnlyList<IStorageFile> result = await sp.OpenFilePickerAsync(new FilePickerOpenOptions()
-        {
-            Title = "Open File",
-            FileTypeFilter = GetFileTypes(),
-            AllowMultiple = false,
-        });
-
-        if (result == null || result.Count == 0)
+        if (result == null || result.Length == 0)
             return;
         
-        this._fileLocation.Text = result[0].Path.AbsolutePath;
-    }
-    
-    private IStorageProvider? GetStorageProvider()
-    {
-        var topLevel = TopLevel.GetTopLevel(this);
-        return topLevel?.StorageProvider;
-    }
-    
-    private List<FilePickerFileType>? GetFileTypes()
-    {
-        return new List<FilePickerFileType>
-        {
-            new("Media MP3")
-            {
-                Patterns = new[] { "*.mp3" }
-            }
-        };
+        this._fileLocation.Text = result;
     }
 
     public object Request

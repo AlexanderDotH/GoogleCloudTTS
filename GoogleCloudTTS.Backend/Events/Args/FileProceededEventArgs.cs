@@ -1,14 +1,16 @@
 ﻿namespace GoogleCloudTTS.Backend.Events.Args;
 
-public class FileProceededEventArgs
+public class FileProceededEventArgs : EventArgs
 {
     private int _count;
     private int _max;
+    private string _text;
 
-    public FileProceededEventArgs(int count, int max)
+    public FileProceededEventArgs(int count, int max, string text)
     {
         this._count = count;
         this._max = max;
+        this._text = text;
     }
 
     public int Count
@@ -23,8 +25,14 @@ public class FileProceededEventArgs
         set => this._max = value;
     }
 
+    public string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
+
     public double Percentage
     {
-        get => this._max * 0.01 * this._count;
+        get => (100.0 / this._max) * this._count;
     }
 }

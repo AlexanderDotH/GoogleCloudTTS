@@ -3,6 +3,7 @@ using GoogleCloudTTS.Backend.Engine.Processor.Processors;
 using GoogleCloudTTS.Backend.Events.Args;
 using GoogleCloudTTS.Backend.Helper;
 using GoogleCloudTTS.Backend.Sanitizer;
+using GoogleCloudTTS.Backend.Settings;
 using GoogleCloudTTS.Shared.Classes.Requests;
 using NAudio.Wave;
 
@@ -16,17 +17,21 @@ public class AudioEngine
 
     private WaveFormat _format;
 
-    public event EventHandler<FileProceededEventArgs> FilesProceededEvent; 
+    private SettingsManager _settingsManager;
+
+    public event EventHandler<FileProceededEventArgs> FileProceededEvent; 
     
     public AudioEngine()
     {
+        this._settingsManager = new SettingsManager(new FileInfo("Settings.json"));
+        
         this._format = new WaveFormat(44100, 16, 2);
         
         this._sanitizeEngine = new SanitizeEngine();
         
         this._processors = new List<IProcessor>();
         this._processors.Add(new DelayProcessor(this._format));
-        this._processors.Add(new TTSProcessor(this._format));
+        this._processors.Add(new TTSProcessor(this._format, this._settingsManager.Settings.ApiKey));
         this._processors.Add(new SoundProcessor(this._format));
     }
 
@@ -44,14 +49,14 @@ public class AudioEngine
 
         for (var i = 0; i < request.Requests.Count; i++)
         {
+            OnFileProceeded(i + 1, request.Requests.Count, $"Exported: {i + 1}/{request.Requests.Count}");
+            
             object r = request.Requests[i];
             
             byte[] proceeded = await Process(r);
-            
+
             if (proceeded == null)
                 continue;
-            
-            OnFileProceeded(i, request.Requests.Count);
             
             processedBytes.Add(proceeded);
         }
@@ -75,7 +80,7 @@ public class AudioEngine
         return null;
     }
 
-    private void OnFileProceeded(int count, int max) =>
-        this.FilesProceededEvent.Invoke(this, new FileProceededEventArgs(count, max));
+    private void OnFileProceeded(int count, int max, string text) =>
+        this.FileProceededEvent.Invoke(this, new FileProceededEventArgs(count, max, text));
 
 }

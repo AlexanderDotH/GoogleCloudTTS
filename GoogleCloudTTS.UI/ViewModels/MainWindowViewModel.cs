@@ -5,8 +5,13 @@ using System.ComponentModel;
 using System.IO;
 using System.Reactive;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using Avalonia.Controls.Notifications;
+using Avalonia.Threading;
 using DynamicData;
 using GoogleCloudTTS.Backend.Engine;
+using GoogleCloudTTS.Backend.Events.Args;
+using GoogleCloudTTS.Backend.Helper;
 using GoogleCloudTTS.Shared.Classes;
 using GoogleCloudTTS.Shared.Classes.Requests;
 using GoogleCloudTTS.Shared.Enums;
@@ -31,10 +36,20 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     public ReactiveCommand<Unit, Unit> AddTextElementCommand { get; set; }
     public ReactiveCommand<Unit, Unit> AddSoundElementCommand { get; set; }
     
-    public ReactiveCommand<Unit, Unit> ExportToFileCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> ExportAsMP3FileCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> ExportAsWAVFileCommand { get; set; }
 
+    private bool _processing;
+    private double _progress;
+    private string _elementDisplay;
+
+    private AudioEngine _audioEngine;
+
+    private Window _parent;
+
+    private WindowNotificationManager _notificationManager;
     
-    public MainWindowViewModel()
+    private MainWindowViewModel()
     {
         AddDelayElementCommand = ReactiveCommand.Create(AddDelayElement);
         AddTextElementCommand = ReactiveCommand.Create(AddTextElement);
@@ -45,12 +60,86 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         MoveElementUpCommand = ReactiveCommand.Create<int>(MoveElementUp);
         MoveElementDownCommand = ReactiveCommand.Create<int>(MoveElementDown);
 
-        ExportToFileCommand = ReactiveCommand.Create(ExportToFile);
+        ExportAsMP3FileCommand = ReactiveCommand.CreateFromTask(ExportAsMP3);
+        ExportAsWAVFileCommand = ReactiveCommand.CreateFromTask(ExportAsWav);
+        
+        this._processing = false;
+        this._elementDisplay = string.Empty;
+        this._audioEngine = new AudioEngine();
+        
+        this._audioEngine.FileProceededEvent += AudioEngineOnFileProceededEvent;
         
         this.Elements = new ObservableCollection<Element>();
     }
 
-    private void ExportToFile()
+    public MainWindowViewModel(Window parent) : this()
+    {
+        this._parent = parent;
+    }
+
+    private void AudioEngineOnFileProceededEvent(object? sender, FileProceededEventArgs e)
+    {
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            this.IsProcessing = true;
+            Progress = e.Percentage;
+            Display = e.Text;
+        });
+    }
+
+    private async Task ExportAsWav()
+    {
+        AudioRequest request = BuildAudioRequest();
+        
+        if (request == null)
+            return;
+
+        var result = await new FilePicker(this._parent, "*.wav").Save();
+        
+        if (result == null)
+            return;
+
+        byte[] files = await this._audioEngine.ProcessRequest(request);
+
+        if (files == null || files.Length == 0)
+            return;
+        
+        File.WriteAllBytes(result, files);
+        
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            this.IsProcessing = false;
+        });
+    }
+    
+    private async Task ExportAsMP3()
+    {
+        AudioRequest request = BuildAudioRequest();
+        
+        if (request == null)
+            return;
+
+        var result = await new FilePicker(this._parent, "*.mp3").Save();
+        
+        if (result == null)
+            return;
+
+        byte[] files = await this._audioEngine.ProcessRequest(request);
+
+        if (files == null || files.Length == 0)
+            return;
+
+        files = await Converter.ConvertWaveToMp3(files);
+        
+        File.WriteAllBytes(result, files);
+
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            this.IsProcessing = false;
+        });
+    }
+
+    private AudioRequest BuildAudioRequest()
     {
         AudioRequest request = new AudioRequest();
 
@@ -60,19 +149,21 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         {
             if (element == null)
                 continue;
+
+            var r = element.Control.Request;
             
-            requests.Add(element.Control.Request);
+            if (r == null)
+                continue;
+            
+            requests.Add(r);
         }
 
         request.Requests = requests;
 
         if (requests.Count == 0)
-            return;
-        
-        AudioEngine audioEngine = new AudioEngine();
-        File.WriteAllBytes("audio.mp3", audioEngine.ProcessRequest(request).GetAwaiter().GetResult());
+            return null;
 
-        // Insert request to backend here
+        return request;
     }
 
     private void AddDelayElement()
@@ -125,7 +216,7 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
     {
         int index = GetElementIndexById(id);
 
-        if (index + 1 > Elements.Count)
+        if (index + 1 >= Elements.Count)
             return;
         
         this.Elements.Move(index, index + 1);
@@ -142,5 +233,44 @@ public class MainWindowViewModel : ViewModelBase, INotifyPropertyChanged
         }
 
         return -1;
+    }
+
+    public bool IsProcessing
+    {
+        get
+        {
+            return this._processing;
+        }
+        set
+        {
+            this._processing = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsProcessing"));
+        }
+    }
+    
+    public double Progress
+    {
+        get
+        {
+            return this._progress;
+        }
+        set
+        {
+            this._progress = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Progress"));
+        }
+    }
+    
+    public string Display
+    {
+        get
+        {
+            return this._elementDisplay;
+        }
+        set
+        {
+            this._elementDisplay = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Display"));
+        }
     }
 }

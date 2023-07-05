@@ -10,10 +10,12 @@ namespace GoogleCloudTTS.Backend.Engine.Processor.Processors;
 public class TTSProcessor : IProcessor
 {
     private WaveFormat _format;
+    private string _apiKey;
     
-    public TTSProcessor(WaveFormat format)
+    public TTSProcessor(WaveFormat format, string apiKey)
     {
         this._format = format;
+        this._apiKey = apiKey;
     }
     
     public async Task<byte[]> GetAudio(object request)
@@ -33,7 +35,7 @@ public class TTSProcessor : IProcessor
         HttpClient client = new HttpClient();
         HttpRequestMessage webRequest = new HttpRequestMessage(
             HttpMethod.Post, 
-            $"https://texttospeech.googleapis.com/v1/text:synthesize?key=AIzaSyDibMt5pCxYYsywPx5EaYIHhAXLw9y5qls");
+            $"https://texttospeech.googleapis.com/v1/text:synthesize?key={this._apiKey}");
         
         StringContent content = new StringContent(json, null, "application/json");
         webRequest.Content = content;

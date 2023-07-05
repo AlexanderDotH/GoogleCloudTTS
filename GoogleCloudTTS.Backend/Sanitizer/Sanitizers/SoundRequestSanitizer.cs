@@ -14,7 +14,9 @@ public class SoundRequestSanitizer : ISanitizer
         if (soundRequest == null)
             return null;
         
-        if (!soundRequest.File.Exists)
+        string file = Uri.UnescapeDataString(soundRequest.File.FullName);
+        
+        if (!File.Exists(file))
             return null;
         
         return soundRequest;
