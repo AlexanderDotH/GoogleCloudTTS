@@ -7,15 +7,17 @@ public class Converter
 {
     public static async Task<byte[]> ConvertWaveToMp3(byte[] audioFile)
     {
-        using MemoryStream inputMs = new MemoryStream(audioFile);
-        using MemoryStream outputMs = new MemoryStream();
-        
-        using WaveFileReader reader = new WaveFileReader(inputMs);
-        using LameMP3FileWriter writer = new LameMP3FileWriter(outputMs, reader.WaveFormat, LAMEPreset.ABR_128);
-    
-        reader.CopyTo(writer);
+        await using (var ms = new MemoryStream(audioFile))
+        await using (var reader = new WaveFileReader(ms))
+        {
+            var msOut = new MemoryStream();
+            await using (var writer = new LameMP3FileWriter(msOut, reader.WaveFormat, LAMEPreset.VBR_90))
+            {
+                reader.CopyTo(writer);
+            }
 
-        return outputMs.ToArray();
+            return msOut.ToArray();
+        }
     } 
     
     public static async Task<byte[]> ConvertMp3ToWav(string mp3File)

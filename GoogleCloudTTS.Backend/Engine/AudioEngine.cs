@@ -83,4 +83,8 @@ public class AudioEngine
     private void OnFileProceeded(int count, int max, string text) =>
         this.FileProceededEvent.Invoke(this, new FileProceededEventArgs(count, max, text));
 
+    public WaveFormat Format
+    {
+        get => _format;
+    }
 }

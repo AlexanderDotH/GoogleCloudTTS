@@ -8,16 +8,12 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Avalonia.Threading;
-using DynamicData;
 using GoogleCloudTTS.Backend.Engine;
 using GoogleCloudTTS.Backend.Events.Args;
 using GoogleCloudTTS.Backend.Helper;
-using GoogleCloudTTS.Shared.Classes;
 using GoogleCloudTTS.Shared.Classes.Requests;
-using GoogleCloudTTS.Shared.Enums;
 using GoogleCloudTTS.UI.Models;
 using GoogleCloudTTS.UI.Views.Elements.Single;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ReactiveUI;
 
 namespace GoogleCloudTTS.UI.ViewModels;
