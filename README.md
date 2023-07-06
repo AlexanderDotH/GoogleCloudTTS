@@ -1,7 +1,7 @@
 # GoogleCloudTTS
 <img src="https://badgen.net/badge/released/stable/green?icon=github" />
 
-<img align="left" src="https://github.com/AlexanderDotH/GoogleCloudTTS/assets/20642291/75279796-b242-4b93-a9dd-1d4b633e112c" alt="drawing" width="100"/> 
+<img align="left" src="https://github.com/AlexanderDotH/GoogleCloudTTS/assets/20642291/a723d4e9-919d-461a-825d-b261b9de1429" alt="drawing" width="100"/> 
 <br>
 Welcome to the GoogleCloudTTS-Tool <br>A tool to craft AI-spoken text with blocks, as effortless as Lego-building.
 
@@ -34,4 +34,6 @@ Before you can use this tool, you'll need to make a few settings. Here are the s
 <br>
 
 ## Preview
-<img align="left" src="https://github.com/AlexanderDotH/GoogleCloudTTS/assets/20642291/ae6aa8bc-4b30-48b4-a556-2ef6d764f50c" alt="drawing" width="700"/> 
+<img align="left" src="https://github.com/AlexanderDotH/GoogleCloudTTS/assets/20642291/fee2b681-27b0-4e93-9ce0-9c40ef15f442" alt="drawing" width="700"/> 
+
+
