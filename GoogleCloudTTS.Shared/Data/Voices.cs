@@ -57,6 +57,21 @@ public class Voices : ObservableCollection<VoiceConfig>
             "en-IN-Standard-C",
             "en-IN-Standard-D");
 
+        // en-AU
+        AddVoiceConfig("English (Australien)", "en-AU", "WaveNet",
+            gender,
+            "en-AU-Wavenet-A",
+            "en-AU-Wavenet-B",
+            "en-AU-Wavenet-C",
+            "en-AU-Wavenet-D");
+
+        AddVoiceConfig("English (United States)", "en-US", "Basic",
+            gender,
+            "en-AU-Standard-A",
+            "en-AU-Standard-B",
+            "en-AU-Standard-C",
+            "en-AU-Standard-D");
+
         // en-US
         AddVoiceConfig("English (United States)", "en-US", "Neural2",
             gender,
