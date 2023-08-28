@@ -13,18 +13,18 @@ public class Voices : ObservableCollection<VoiceConfig>
         gender.Add("Neutral");
         
         // de-DE
-        AddVoiceConfig("Deutsch", "de-DE", "Neural2",
+        AddVoiceConfig("German", "de-DE", "Neural2",
             gender,
             "de-DE-Neural2-B",
             "de-DE-Neural2-C",
             "de-DE-Neural2-D",
             "de-DE-Neural2-F");
 
-        AddVoiceConfig("Deutsch", "de-DE", "Polyglot",
+        AddVoiceConfig("German", "de-DE", "Polyglot",
             gender,
             "de-DE-Polyglot-1");
 
-        AddVoiceConfig("Deutsch", "de-DE", "WaveNet",
+        AddVoiceConfig("German", "de-DE", "WaveNet",
             gender,
             "de-DE-Wavenet-F",
             "de-DE-Wavenet-A",
@@ -33,7 +33,7 @@ public class Voices : ObservableCollection<VoiceConfig>
             "de-DE-Wavenet-D",
             "de-DE-Wavenet-E");
 
-        AddVoiceConfig("Deutsch", "de-DE", "Basic",
+        AddVoiceConfig("German", "de-DE", "Basic",
             gender,
             "de-DE-Standard-A",
             "de-DE-Standard-B",
@@ -42,35 +42,52 @@ public class Voices : ObservableCollection<VoiceConfig>
             "de-DE-Standard-E",
             "de-DE-Standard-F");
 
-        // en-IN
-        AddVoiceConfig("English (Indien)", "en-IN", "WaveNet",
-            gender,
-            "en-IN-Wavenet-A",
-            "en-IN-Wavenet-B",
-            "en-IN-Wavenet-C",
-            "en-IN-Wavenet-D");
-
-        AddVoiceConfig("English (Indien)", "en-US", "Basic",
-            gender,
-            "en-IN-Standard-A",
-            "en-IN-Standard-B",
-            "en-IN-Standard-C",
-            "en-IN-Standard-D");
-
         // en-AU
-        AddVoiceConfig("English (Australien)", "en-AU", "WaveNet",
+        AddVoiceConfig("English (Australian)", "en-AU", "WaveNet",
             gender,
             "en-AU-Wavenet-A",
             "en-AU-Wavenet-B",
             "en-AU-Wavenet-C",
             "en-AU-Wavenet-D");
 
-        AddVoiceConfig("English (Australien)", "en-US", "Basic",
+        AddVoiceConfig("English (Australian)", "en-US", "Basic",
             gender,
             "en-AU-Standard-A",
             "en-AU-Standard-B",
             "en-AU-Standard-C",
             "en-AU-Standard-D");
+
+        // en-IN
+        AddVoiceConfig("English (Indian)", "en-IN", "WaveNet",
+            gender,
+            "en-IN-Wavenet-A",
+            "en-IN-Wavenet-B",
+            "en-IN-Wavenet-C",
+            "en-IN-Wavenet-D");
+
+        AddVoiceConfig("English (Indian)", "en-US", "Basic",
+            gender,
+            "en-IN-Standard-A",
+            "en-IN-Standard-B",
+            "en-IN-Standard-C",
+            "en-IN-Standard-D");
+
+        // en-GB
+        AddVoiceConfig("English (British)", "en-AU", "WaveNet",
+            gender,
+            "en-GB-Wavenet-A",
+            "en-GB-Wavenet-B",
+            "en-GB-Wavenet-C",
+            "en-GB-Wavenet-D",
+            "en-GB-Wavenet-F");
+
+        AddVoiceConfig("English (British)", "en-US", "Basic",
+            gender,
+            "en-GB-Standard-A",
+            "en-GB-Standard-B",
+            "en-GB-Standard-C",
+            "en-GB-Standard-D",
+            "en-GB-Standard-F");
 
         // en-US
         AddVoiceConfig("English (US)", "en-US", "Neural2",
