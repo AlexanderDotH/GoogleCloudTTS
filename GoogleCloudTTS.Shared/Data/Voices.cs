@@ -12,7 +12,7 @@ public class Voices : ObservableCollection<VoiceConfig>
         gender.Add("Female");
         gender.Add("Neutral");
         
-        // German
+        // de-DE
         AddVoiceConfig("German", "de-DE", "Neural2",
             gender,
             "de-DE-Neural2-B",
@@ -42,7 +42,22 @@ public class Voices : ObservableCollection<VoiceConfig>
             "de-DE-Standard-E",
             "de-DE-Standard-F");
 
-        // US
+        // en-IN
+        AddVoiceConfig("English (Indien)", "en-IN", "WaveNet",
+            gender,
+            "en-IN-Wavenet-A",
+            "en-IN-Wavenet-B",
+            "en-IN-Wavenet-C",
+            "en-IN-Wavenet-D");
+
+        AddVoiceConfig("English (United States)", "en-US", "Basic",
+            gender,
+            "en-IN-Standard-A",
+            "en-IN-Standard-B",
+            "en-IN-Standard-C",
+            "en-IN-Standard-D");
+
+        // en-US
         AddVoiceConfig("English (United States)", "en-US", "Neural2",
             gender,
             "en-US-Neural2-A",
