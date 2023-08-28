@@ -6,10 +6,15 @@
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <ApplicationIcon>251443879-a723d4e9-919d-461a-825d-b261b9de1429.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
         <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="251443879-a723d4e9-919d-461a-825d-b261b9de1429.ico" />
     </ItemGroup>
 
     <ItemGroup>
