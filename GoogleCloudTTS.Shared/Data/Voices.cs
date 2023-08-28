@@ -13,18 +13,18 @@ public class Voices : ObservableCollection<VoiceConfig>
         gender.Add("Neutral");
         
         // de-DE
-        AddVoiceConfig("German", "de-DE", "Neural2",
+        AddVoiceConfig("Deutsch", "de-DE", "Neural2",
             gender,
             "de-DE-Neural2-B",
             "de-DE-Neural2-C",
             "de-DE-Neural2-D",
             "de-DE-Neural2-F");
 
-        AddVoiceConfig("German", "de-DE", "Polyglot",
+        AddVoiceConfig("Deutsch", "de-DE", "Polyglot",
             gender,
             "de-DE-Polyglot-1");
 
-        AddVoiceConfig("German", "de-DE", "WaveNet",
+        AddVoiceConfig("Deutsch", "de-DE", "WaveNet",
             gender,
             "de-DE-Wavenet-F",
             "de-DE-Wavenet-A",
@@ -33,7 +33,7 @@ public class Voices : ObservableCollection<VoiceConfig>
             "de-DE-Wavenet-D",
             "de-DE-Wavenet-E");
 
-        AddVoiceConfig("German", "de-DE", "Basic",
+        AddVoiceConfig("Deutsch", "de-DE", "Basic",
             gender,
             "de-DE-Standard-A",
             "de-DE-Standard-B",
@@ -50,7 +50,7 @@ public class Voices : ObservableCollection<VoiceConfig>
             "en-IN-Wavenet-C",
             "en-IN-Wavenet-D");
 
-        AddVoiceConfig("English (United States)", "en-US", "Basic",
+        AddVoiceConfig("English (Indien)", "en-US", "Basic",
             gender,
             "en-IN-Standard-A",
             "en-IN-Standard-B",
@@ -65,7 +65,7 @@ public class Voices : ObservableCollection<VoiceConfig>
             "en-AU-Wavenet-C",
             "en-AU-Wavenet-D");
 
-        AddVoiceConfig("English (United States)", "en-US", "Basic",
+        AddVoiceConfig("English (Australien)", "en-US", "Basic",
             gender,
             "en-AU-Standard-A",
             "en-AU-Standard-B",
@@ -73,7 +73,7 @@ public class Voices : ObservableCollection<VoiceConfig>
             "en-AU-Standard-D");
 
         // en-US
-        AddVoiceConfig("English (United States)", "en-US", "Neural2",
+        AddVoiceConfig("English (US)", "en-US", "Neural2",
             gender,
             "en-US-Neural2-A",
             "en-US-Neural2-C",
@@ -85,16 +85,16 @@ public class Voices : ObservableCollection<VoiceConfig>
             "en-US-Neural2-I",
             "en-US-Neural2-J");
 
-        AddVoiceConfig("English (United States)", "en-US", "Studio",
+        AddVoiceConfig("English (US)", "en-US", "Studio",
             gender,
             "en-US-Studio-M",
             "en-US-Studio-O");
 
-        AddVoiceConfig("English (United States)", "en-US", "Polyglot",
+        AddVoiceConfig("English (US)", "en-US", "Polyglot",
             gender,
             "en-US-Polyglot-1");
 
-        AddVoiceConfig("English (United States)", "en-US", "WaveNet",
+        AddVoiceConfig("English (US)", "en-US", "WaveNet",
             gender,
             "en-US-Wavenet-G",
             "en-US-Wavenet-H",
@@ -107,14 +107,14 @@ public class Voices : ObservableCollection<VoiceConfig>
             "en-US-Wavenet-E",
             "en-US-Wavenet-F");
 
-        AddVoiceConfig("English (United States)", "en-US", "News",
+        AddVoiceConfig("English (US)", "en-US", "News",
             gender,
             "en-US-News-K",
             "en-US-News-L",
             "en-US-News-M",
             "en-US-News-N");
 
-        AddVoiceConfig("English (United States)", "en-US", "Basic",
+        AddVoiceConfig("English (US)", "en-US", "Basic",
             gender,
             "en-US-Standard-A",
             "en-US-Standard-B",
