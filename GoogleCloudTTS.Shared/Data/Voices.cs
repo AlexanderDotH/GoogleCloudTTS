@@ -160,6 +160,23 @@ public class Voices : ObservableCollection<VoiceConfig>
             "fr-FR-Wavenet-C",
             "fr-FR-Wavenet-D",
             "fr-FR-Wavenet-E");
+
+        AddVoiceConfig("French (France)", "fr-FR", "Studio",
+            gender,
+            "fr-FR-Studio-A",
+            "fr-FR-Studio-D");
+
+        AddVoiceConfig("French (France)", "fr-FR", "Polyglot",
+            gender,
+            "fr-FR-Polyglot-1");
+
+        AddVoiceConfig("French (France)", "fr-FR", "Basic",
+            gender,
+            "fr-FR-Standard-A",
+            "fr-FR-Standard-B",
+            "fr-FR-Standard-C",
+            "fr-FR-Standard-D",
+            "fr-FR-Standard-E");
     }
     
     private void AddVoiceConfig(string language, string languageCode, string voiceEngine, ObservableCollection<string> gender, params string[] voices)
