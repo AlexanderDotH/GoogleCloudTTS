@@ -6,6 +6,7 @@
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <ApplicationIcon>251443879-a723d4e9-919d-461a-825d-b261b9de1429.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,17 +14,22 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="251443879-a723d4e9-919d-461a-825d-b261b9de1429.ico" />
+    </ItemGroup>
+
+    <ItemGroup>
         <TrimmerRootAssembly Include="Avalonia.Themes.Fluent" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.0.0-rc1.1" />
-        <PackageReference Include="Avalonia.Desktop" Version="11.0.0-rc1.1" />
+        <PackageReference Include="Avalonia" Version="11.2.2" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.2.2" />
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-rc1.1" />
-        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-rc1.1" />
-        <PackageReference Include="Material.Icons.Avalonia" Version="2.0.1" />
-        <PackageReference Include="Semi.Avalonia" Version="11.0.0-rc1" />
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.2" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="11.2.2" />
+        <PackageReference Include="Material.Icons.Avalonia" Version="2.1.10" />
+        <PackageReference Include="Semi.Avalonia" Version="11.2.1" />
+        <PackageReference Include="System.Text.Json" Version="9.0.0" />
     </ItemGroup>
 
     <ItemGroup>
